@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TalkFix AI | Conversation Coach</title>
+<style>
+:root{--bg:#f5f4fb;--card:rgba(255,255,255,.84);--text:#252334;--muted:#77738a;--line:#e8e5ef;--accent:#6d5dfc;--soft:#efedff;--user:#6d5dfc;--bot:#f3f1f8}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,system-ui,sans-serif;color:var(--text);background:radial-gradient(circle at 8% 12%,#e4deff 0,transparent 28%),radial-gradient(circle at 92% 86%,#dff6f0 0,transparent 27%),var(--bg);overflow:hidden}
+.app{width:min(1180px,94vw);height:min(900px,94vh);margin:3vh auto;display:grid;grid-template-columns:275px 1fr;overflow:hidden;border:1px solid #fff;border-radius:28px;background:var(--card);backdrop-filter:blur(22px);box-shadow:0 28px 80px rgba(62,55,100,.16)}
+aside{padding:27px 20px;border-right:1px solid var(--line);background:rgba(255,255,255,.45);display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:12px;margin-bottom:35px}.logo{width:47px;height:47px;border-radius:15px;display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700;background:linear-gradient(135deg,#8174ff,#5c4de8);box-shadow:0 10px 25px rgba(109,93,252,.25)}.brand h1{margin:0;font-size:18px}.brand span{color:var(--muted);font-size:11px}.label{margin:0 0 11px 4px;color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px}.tone{padding:12px 13px;margin-bottom:7px;border-radius:13px;border:1px solid transparent;color:#514d61;font-size:13px;background:rgba(255,255,255,.55)}.tone.active{color:#5849e8;border-color:#dcd7ff;background:var(--soft)}.tone strong{display:block;margin-bottom:2px}.tone small{color:var(--muted);font-size:10px}.side-note{margin-top:auto;padding:15px;border-radius:16px;background:#faf9fd;border:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.55}.side-note b{color:var(--text)}
+main{min-width:0;display:flex;flex-direction:column}header{height:76px;padding:0 27px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(255,255,255,.48)}.header-title{display:flex;align-items:center;gap:10px}.online{width:9px;height:9px;border-radius:50%;background:#40c889;box-shadow:0 0 0 4px rgba(64,200,137,.12)}.header-title strong{font-size:13px}.header-title span{display:block;margin-top:2px;color:var(--muted);font-size:10px}.model{padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:10px;background:#fff}
+#chat{flex:1;overflow-y:auto;padding:28px}.welcome{max-width:700px;margin:8vh auto 0;text-align:center}.bubble-icon{width:70px;height:70px;margin:0 auto 18px;display:grid;place-items:center;border-radius:22px;color:#fff;font-size:29px;background:linear-gradient(145deg,#877bff,#5c4de8);box-shadow:0 18px 38px rgba(109,93,252,.22);transform:rotate(-3deg)}.welcome h2{margin:0 0 9px;font-size:clamp(25px,4vw,37px);letter-spacing:-.8px}.welcome p{max-width:540px;margin:auto;color:var(--muted);font-size:14px;line-height:1.65}.examples{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:24px}.example{padding:9px 12px;border:1px solid var(--line);border-radius:999px;color:#625e70;background:rgba(255,255,255,.72);cursor:pointer;font-size:11px;transition:.2s}.example:hover{color:#5849e8;border-color:#cfc9ff;transform:translateY(-1px)}
+.message{max-width:820px;margin:0 auto 16px;display:flex;gap:10px}.message.user{justify-content:flex-end}.avatar{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:11px;font-size:11px;font-weight:700;border:1px solid var(--line);background:#fff}.bot .avatar{color:#fff;background:linear-gradient(135deg,#8174ff,#5c4de8);border:0}.bubble{max-width:min(76%,660px);padding:13px 15px;border-radius:17px;font-size:14px;line-height:1.6;white-space:pre-wrap}.user .bubble{color:#fff;background:var(--user);border-bottom-right-radius:5px}.bot .bubble{color:#383447;background:var(--bot);border:1px solid var(--line);border-bottom-left-radius:5px}
+.composer{padding:17px 24px 21px;border-top:1px solid var(--line);background:rgba(255,255,255,.5)}.input-wrap{max-width:850px;margin:auto;display:flex;align-items:flex-end;gap:8px;padding:8px 8px 8px 14px;border:1px solid #ddd9e8;border-radius:18px;background:#fff;box-shadow:0 7px 25px rgba(54,45,89,.06)}textarea{flex:1;min-height:42px;max-height:120px;resize:none;border:0;outline:0;padding:11px 3px;color:var(--text);background:transparent;font:inherit;font-size:14px}textarea::placeholder{color:#aaa6b6}.send{width:43px;height:43px;flex:0 0 43px;border:0;border-radius:13px;color:#fff;background:linear-gradient(135deg,#8174ff,#5c4de8);cursor:pointer;font-size:17px}.send:disabled{opacity:.45;cursor:not-allowed}.hint{max-width:850px;margin:7px auto 0;text-align:center;color:#9a96a8;font-size:9px}.typing{display:inline-flex;gap:4px}.typing i{width:5px;height:5px;border-radius:50%;background:#898497;animation:pulse 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}@keyframes pulse{0%,70%,100%{opacity:.3;transform:translateY(0)}35%{opacity:1;transform:translateY(-3px)}}
+@media(max-width:760px){body{overflow:auto}.app{width:100%;height:100vh;margin:0;border-radius:0;grid-template-columns:1fr}aside{display:none}header{padding:0 16px}#chat{padding:20px 15px}.composer{padding:13px}.bubble{max-width:84%}.welcome{margin-top:11vh}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+<div class="brand"><div class="logo">T</div><div><h1>TalkFix AI</h1><span>Conversation Coach</span></div></div>
+<p class="label">Choose your tone</p>
+<div class="tone active"><strong>✨ Friendly</strong><small>Warm and natural</small></div>
+<div class="tone"><strong>💼 Formal</strong><small>Professional and polished</small></div>
+<div class="tone"><strong>💙 Apologetic</strong><small>Sincere and respectful</small></div>
+<div class="tone"><strong>⚡ Confident</strong><small>Clear and assertive</small></div>
+<div class="tone"><strong>🌿 Calm</strong><small>Less emotional and peaceful</small></div>
+<div class="side-note"><b>How it works</b><br>Paste what you want to say. Tell TalkFix the tone you want, and it will turn your thoughts into a natural message.</div>
+</aside>
+<main>
+<header><div class="header-title"><span class="online"></span><div><strong>TalkFix is ready</strong><span>Your words, improved — your meaning, preserved</span></div></div><div class="model">Gemini 3.6 Flash</div></header>
+<section id="chat">
+<div class="welcome" id="welcome">
+<div class="bubble-icon">✦</div><h2>Say it better.</h2>
+<p>Turn awkward, difficult, emotional, or unclear thoughts into messages that sound natural and feel like you.</p>
+<div class="examples">
+<button class="example" onclick="usePrompt('I cannot attend the meeting tomorrow. Make it formal.')">Make a message formal</button>
+<button class="example" onclick="usePrompt('I am sorry I replied late. Make it sincere and apologetic.')">Write an apology</button>
+<button class="example" onclick="usePrompt('I do not agree with this, but I want to say it respectfully.')">Make it respectful</button>
+<button class="example" onclick="usePrompt('Tell my friend I need some space. Make it calm and friendly.')">Handle a difficult conversation</button>
+</div></div>
+</section>
+<div class="composer"><div class="input-wrap"><textarea id="message" rows="1" placeholder="Paste your message and tell me how you want it to sound..."></textarea><button class="send" id="send" onclick="sendMessage()">➤</button></div><div class="hint">TalkFix only helps with rewriting and improving conversations.</div></div>
+</main></div>
+<script>
+const chat=document.getElementById("chat"),input=document.getElementById("message"),send=document.getElementById("send"),welcome=document.getElementById("welcome");
+input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,120)+"px"});
+input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
+function usePrompt(text){input.value=text;input.dispatchEvent(new Event("input"));input.focus()}
+function addMessage(text,type){if(welcome)welcome.remove();const row=document.createElement("div");row.className=`message ${type}`;const avatar=document.createElement("div");avatar.className="avatar";avatar.textContent=type==="user"?"You":"T";const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;if(type==="user"){row.appendChild(bubble);row.appendChild(avatar)}else{row.appendChild(avatar);row.appendChild(bubble)}chat.appendChild(row);chat.scrollTop=chat.scrollHeight}
+function addTyping(){if(welcome)welcome.remove();const row=document.createElement("div");row.className="message bot";row.id="typing";const avatar=document.createElement("div");avatar.className="avatar";avatar.textContent="T";const bubble=document.createElement("div");bubble.className="bubble";bubble.innerHTML='<span class="typing"><i></i><i></i><i></i></span>';row.appendChild(avatar);row.appendChild(bubble);chat.appendChild(row);chat.scrollTop=chat.scrollHeight}
+async function sendMessage(){const message=input.value.trim();if(!message||send.disabled)return;addMessage(message,"user");input.value="";input.style.height="auto";send.disabled=true;addTyping();try{const response=await fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message})});const data=await response.json();document.getElementById("typing")?.remove();addMessage(data.reply||"I couldn't create a rewrite. Please try again.","bot")}catch(error){document.getElementById("typing")?.remove();addMessage("I couldn't connect to TalkFix right now. Please try again.","bot")}finally{send.disabled=false;input.focus()}}
+</script>
+</body>
+</html>
